@@ -7,16 +7,17 @@ Considere la aplicación bancaria de la práctica I, la cual administra registro
 ![Diagrama de clases](http://s28.postimg.org/ujtyuzukd/diagrama_de_clases.png)
 
 Haciendo uso de este programa, realice las siguientes actividades:
-  1.	Extender el programa para eliminar y recuperar registros: uno o varios. Use un byte adicional para marcar los registros de datos y compacte el archivo del índice cada vez que una entrada deba ser eliminada.
-  *	Definir al menos dos métodos que permitan realizar búsquedas lineales: Una para encontrar un registro y otra para encontrar un grupo.
-  *	Insertar ahora al menos 100,000 registros generados de manera aleatoria. Asegurar que los valores dentro de cada campo tengan una distribución uniforme.
-  *	Definir un conjunto de pruebas significativas para su demostración: Inserciones, eliminaciones y búsquedas. Tome tiempos para comparar sus resultados más adelante.
 
-  2.	Construir ahora un nuevo programa que permita insertar, eliminar y recuperar registros utilizando un índice disperso. Para ello suponga que cada 10 registros tenemos el inicio de un nuevo bloque.
-  *	Definir al menos dos métodos que permitan realizar búsquedas lineales: Una para encontrar un registro y otra para encontrar un grupo.
-  *	Insertar al menos 100,000 registros generados de manera aleatoria. Asegurar que los valores dentro de cada campo tengan  una distribución uniforme.
-  *	Definir un conjunto de pruebas significativas para su demostración: Inserciones, eliminaciones y búsquedas. Tome tiempos para comparar sus resultados más adelante.
+1.	Extender el programa para eliminar y recuperar registros: uno o varios. Use un byte adicional para marcar los registros de datos y compacte el archivo del índice cada vez que una entrada deba ser eliminada.
+   *	Definir al menos dos métodos que permitan realizar búsquedas lineales: Una para encontrar un registro y otra para encontrar un grupo.
+   *	Insertar ahora al menos 100,000 registros generados de manera aleatoria. Asegurar que los valores dentro de cada campo tengan una distribución uniforme.
+   *	Definir un conjunto de pruebas significativas para su demostración: Inserciones, eliminaciones y búsquedas. Tome tiempos para comparar sus resultados más adelante.
 
-  3.	Construir una tabla que permita comparar los tiempos obtenidos después de ejecutar inserciones, eliminaciones y búsquedas en ambos índices:
-  *	Discuta bajo qué condiciones es mejor usar el índice denso.
-  *	De manera similar discuta las condiciones bajo las cuáles es más interesante usar el índice disperso.
+2.	Construir ahora un nuevo programa que permita insertar, eliminar y recuperar registros utilizando un índice disperso. Para ello suponga que cada 10 registros tenemos el inicio de un nuevo bloque.
+   *	Definir al menos dos métodos que permitan realizar búsquedas lineales: Una para encontrar un registro y otra para encontrar un grupo.
+   *	Insertar al menos 100,000 registros generados de manera aleatoria. Asegurar que los valores dentro de cada campo tengan  una distribución uniforme.
+   *	Definir un conjunto de pruebas significativas para su demostración: Inserciones, eliminaciones y búsquedas. Tome tiempos para comparar sus resultados más adelante.
+
+3.	Construir una tabla que permita comparar los tiempos obtenidos después de ejecutar inserciones, eliminaciones y búsquedas en ambos índices:
+   *	Discuta bajo qué condiciones es mejor usar el índice denso.
+   *	De manera similar discuta las condiciones bajo las cuáles es más interesante usar el índice disperso.
