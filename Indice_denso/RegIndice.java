@@ -1,9 +1,8 @@
 /******************************************************************
 /  clase: RegIndice
 /
-/  autor: Dr. JosŽ Luis Zechinelli Martini
+/  autor: Dr. JosÅ½ Luis Zechinelli Martini
 /******************************************************************/
-
 import java.io.*;
 
 public class RegIndice {
@@ -15,10 +14,12 @@ public class RegIndice {
     / constructor
     /-----------------------------------------------------------------*/
     
-	public RegIndice( int longitud ) { clave = new byte[ longitud ]; }
+	public RegIndice(){}
+        
+        public RegIndice( int longitud ) { clave = new byte[ longitud ]; }
     
     /*-----------------------------------------------------------------
-    / mŽtodos getters/setters
+    / mï¿½todos getters/setters
     /-----------------------------------------------------------------*/
     
 	public String getClave() { return new String( clave ); }
@@ -36,7 +37,7 @@ public class RegIndice {
 	public void setLiga( int posicion ) { liga = posicion; }
     
     /*-----------------------------------------------------------------
-    / longitud en bytes y comparaci—n del valor de la clave
+    / longitud en bytes y comparaciï¿½n del valor de la clave
     /-----------------------------------------------------------------*/
     
 	public int length() { return clave.length + Integer.SIZE / 8; }
@@ -49,11 +50,11 @@ public class RegIndice {
 		for( int i = 0; i < clave.length && i < k.length; i++ )
              v[i] = k[i];
         
-		return getClave().compareTo( new String(v) );
+		return getClave().compareTo(new String(v) );
 	}
     
     /*-----------------------------------------------------------------
-    / mŽtodos para escribir y leer una entrada en el ’ndice
+    / mï¿½todos para escribir y leer una entrada en el ï¿½ndice
     /-----------------------------------------------------------------*/
     
 	public void read( RandomAccessFile raf ) throws IOException {
