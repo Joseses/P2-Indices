@@ -1,7 +1,7 @@
 /******************************************************************
 /  clase: Archivo
 /
-/  autor: Dr. JosŽ Luis Zechinelli Martini
+/  autor: Dr. JosÅ½ Luis Zechinelli Martini
 /******************************************************************/
 
 import java.io.*;
@@ -14,7 +14,7 @@ public class Archivo {
 	private IndiceDenso indiceDenso = null;
     
     /*-----------------------------------------------------------------
-    / constructor: ’ndice denso con una clave de bœsqueda de 20 bytes
+    / constructor: ï¿½ndice denso con una clave de bï¿½squeda de 20 bytes
     /-----------------------------------------------------------------*/
     
 	public Archivo( RandomAccessFile archivo,
@@ -63,20 +63,20 @@ public class Archivo {
     
     public boolean borrar( String nomSuc ) throws Exception {
         
-        int posicionIndice = indiceDenso.find( nomSuc );
+        int posicionIndice = indiceDenso.find( nomSuc ); //0,1,....numero de registros del indice
         
         if( posicionIndice == SIN_ASIGNAR ) { return false; }
         
         else {
             Registro registro = new Registro();
-            int posicion = indiceDenso.getLiga( posicionIndice );
+            int posicion = indiceDenso.getLiga( posicionIndice );// posicion del registro en el archivo principal
             
             raf.seek( posicion * registro.length() );
             registro.read( raf );
             registro.setFlag( true );
             registro.setSucursal( "@Eliminado!@" ); // se puede quitar
             
-            raf.seek( posicion * registro.length() );
+            raf.seek( posicion * registro.length() );// eliminado
             registro.write( raf );
             
             if( raf.getFilePointer() == raf.length() ) {
@@ -125,7 +125,7 @@ public class Archivo {
 	}
     
     /*-----------------------------------------------------------------
-    / presenta los registros tanto del archivo como de su ’ndice
+    / presenta los registros tanto del archivo como de su ï¿½ndice
     /-----------------------------------------------------------------*/
     
     public void mostrar() throws Exception {
@@ -135,7 +135,7 @@ public class Archivo {
         
 		indiceDenso.mostrar();
         
-		System.out.println( "Nœmero de registros: " + size );
+		System.out.println( "Nï¿½mero de registros: " + size );
 		raf.seek( 0 );
         
 		for( int i = 0; i < size; i ++ ) {
@@ -149,6 +149,54 @@ public class Archivo {
 		}
 	}
     
+    /*------------------------------------------------------------------
+    /Busqueda Lineal
+    */
+    public void busquedaLineal(String clave, Registro registro, int num ) throws IOException {
+        
+		int n = (int) raf.length() / registro.length();
+                boolean encontrado = false;
+                
+                int posicion = indiceDenso.busquedaLineal(clave);
+                
+               
+
+		if(posicion != -1  )
+                {
+                    
+                    raf.seek(posicion*registro.length());
+                    registro.read(raf);
+                    
+                    System.out.println("Sucursal del registro existe"/*+" "+posicion+" "+registro.compareTo(clave)*/);
+                    int i = posicion;
+                    while(i < n && ( registro.compareTo(clave)== 0 || registro.deleteFlag() ))
+                    //for(int i = posicion; i < n && registro.compareTo(clave)== 0;  i++) 
+                    {
+			
+                       // System.out.println(posicion+" "+i+" "+n+" "+registro.compareTo(clave)+" "+registro.getNumero()+" "+registro.getSucursal());
+                        
+			if(registro.getNumero() == num )
+                        {
+                            System.out.println("El registro se encuentra en la posicÃ³n "+ i +" del archivo");
+                            encontrado = true;
+			}
+                        
+                        i++;
+                        if(i < n){
+                            raf.seek(i* registro.length());
+                            registro.read(raf);}
+                    }
+                }
+                else
+                {
+                     System.out.println("La sucursal no existe");       
+                }
+                if(!encontrado)
+                    System.out.println("No existe el registro con tal numero de cuenta");
+		
+    }
+    
+    
     /*-----------------------------------------------------------------
     / cierra el archivo de datos
     /-----------------------------------------------------------------*/
@@ -159,3 +207,4 @@ public class Archivo {
         indiceDenso.cerrar();
     }
 }
+
