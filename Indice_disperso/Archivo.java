@@ -1,27 +1,27 @@
 /******************************************************************
 /  clase: Archivo
 /
-/  autor: Dr. José Luis Zechinelli Martini
+/  autor: Dr. JosÔøΩ Luis Zechinelli Martini
 /******************************************************************/
 
 import java.io.*;
 
 public class Archivo {
     
-    private final int SIN_ASIGNAR = IndiceDenso.SIN_ASIGNAR;
+    private final int SIN_ASIGNAR = IndiceDisperso.SIN_ASIGNAR;
     
 	private RandomAccessFile raf = null;
-	private IndiceDenso indiceDenso = null;
+	private IndiceDisperso indiceDisperso = null;
     
     /*-----------------------------------------------------------------
-    / constructor: índice denso con una clave de búsqueda de 20 bytes
+    / constructor: √çndice disperso con una clave de b√∫squeda de 20 bytes
     /-----------------------------------------------------------------*/
     
 	public Archivo( RandomAccessFile archivo,
                     RandomAccessFile indice )
 	{
 		raf = archivo;
-		indiceDenso = new IndiceDenso( indice, 20 );
+		indiceDisperso = new IndiceDisperso( indice, 20 );
 	}
     
     /*-----------------------------------------------------------------
@@ -30,29 +30,29 @@ public class Archivo {
     
 	public void insertar( Registro registro ) throws IOException {
         
-		int posicionIndice = indiceDenso.getPosicion( registro.getSucursal() );
+		int posicionIndice = indiceDisperso.getPosicion( registro.getSucursal() );
         
-		if( posicionIndice == indiceDenso.size()-1 ) {
+		if( posicionIndice == indiceDisperso.size()-1 ) {
             
 			int posicionArchivo = (int) raf.length() / registro.length();
 			insertarEn( posicionArchivo, registro );
             
-            if( indiceDenso.getLiga( posicionIndice ) == SIN_ASIGNAR )
-				indiceDenso.updateLiga( posicionIndice, posicionArchivo );
+            if( indiceDisperso.getLiga( posicionIndice ) == SIN_ASIGNAR )
+				indiceDisperso.updateLiga( posicionIndice, posicionArchivo );
             
             } else {
             
-			int posicionArchivo = indiceDenso.getLiga( posicionIndice + 1 );
+			int posicionArchivo = indiceDisperso.getLiga( posicionIndice + 1 );
 			insertarEn( posicionArchivo, registro );
             
-			if( indiceDenso.getLiga( posicionIndice ) == SIN_ASIGNAR )
-				indiceDenso.updateLiga( posicionIndice, posicionArchivo );
+			if( indiceDisperso.getLiga( posicionIndice ) == SIN_ASIGNAR )
+				indiceDisperso.updateLiga( posicionIndice, posicionArchivo );
             
 			for( posicionIndice ++;
-                 posicionIndice < indiceDenso.size(); posicionIndice ++ )
+                 posicionIndice < indiceDisperso.size(); posicionIndice ++ )
             {
-				posicionArchivo = indiceDenso.getLiga( posicionIndice ) + 1;
-				indiceDenso.updateLiga( posicionIndice, posicionArchivo );
+				posicionArchivo = indiceDisperso.getLiga( posicionIndice ) + 1;
+				indiceDisperso.updateLiga( posicionIndice, posicionArchivo );
 			}
 		}
 	}
@@ -63,13 +63,13 @@ public class Archivo {
     
     public boolean borrar( String nomSuc ) throws Exception {
         
-        int posicionIndice = indiceDenso.find( nomSuc );
+        int posicionIndice = indiceDisperso.find( nomSuc );
         
         if( posicionIndice == SIN_ASIGNAR ) { return false; }
         
         else {
             Registro registro = new Registro();
-            int posicion = indiceDenso.getLiga( posicionIndice );
+            int posicion = indiceDisperso.getLiga( posicionIndice );
             
             raf.seek( posicion * registro.length() );
             registro.read( raf );
@@ -81,7 +81,7 @@ public class Archivo {
             
             if( raf.getFilePointer() == raf.length() ) {
                                                 // compacta el archivo
-                indiceDenso.borrarEntrada( posicionIndice );
+                indiceDisperso.borrarEntrada( posicionIndice );
                 
             } else {
                 
@@ -89,11 +89,11 @@ public class Archivo {
                 
                 if( registro.compareTo( nomSuc ) == 0 ) {
                                                 // actualiza la liga
-                    indiceDenso.updateLiga( posicionIndice, posicion + 1 );
+                    indiceDisperso.updateLiga( posicionIndice, posicion + 1 );
                     
                 } else {
                                                 // compacta el archivo
-                    indiceDenso.borrarEntrada( posicionIndice );
+                    indiceDisperso.borrarEntrada( posicionIndice );
                 }
             }
             
@@ -125,7 +125,7 @@ public class Archivo {
 	}
     
     /*-----------------------------------------------------------------
-    / presenta los registros tanto del archivo como de su índice
+    / presenta los registros tanto del archivo como de su ÔøΩndice
     /-----------------------------------------------------------------*/
     
     public void mostrar() throws Exception {
@@ -133,18 +133,18 @@ public class Archivo {
 		Registro registro = new Registro();
 		int size = (int) raf.length() / registro.length();
         
-		indiceDenso.mostrar();
+		indiceDisperso.mostrar();
         
-		System.out.println( "Número de registros: " + size );
+		System.out.println( "N√∫mero de registros: " + size );
 		raf.seek( 0 );
         
 		for( int i = 0; i < size; i ++ ) {
             
 			registro.read( raf );
             
-			System.out.println( "( " + registro.getSucursal() + ", "
+			System.out.println( "( " + registro.getSucursal().trim() + ", "
                                      + registro.getNumero() + ", "
-                                     + registro.getNombre() + ", "
+                                     + registro.getNombre().trim() + ", "
                                      + registro.getSaldo() + " )" );
 		}
 	}
@@ -156,6 +156,6 @@ public class Archivo {
     public void cerrar() throws IOException {
         
         raf.close();
-        indiceDenso.cerrar();
+        indiceDisperso.cerrar();
     }
 }

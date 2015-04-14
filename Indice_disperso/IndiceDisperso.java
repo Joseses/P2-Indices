@@ -1,12 +1,6 @@
-/******************************************************************
-/  clase: IndiceDenso
-/
-/  autor: Dr. JosŽ Luis Zechinelli Martini
-/******************************************************************/
-
 import java.io.*;
 
-public class IndiceDenso {
+public class IndiceDisperso {
     
     public final static int SIN_ASIGNAR = -1;    // registro no encontrado
     
@@ -17,15 +11,15 @@ public class IndiceDenso {
     / constructor
     /-----------------------------------------------------------------*/
     
-	public IndiceDenso( RandomAccessFile indice, int longitud ) {
+	public IndiceDisperso( RandomAccessFile indice, int longitud ) {
         
 		raf = indice;
 		registro = new RegIndice( longitud );
 	}
     
     /*-----------------------------------------------------------------
-    / consulta del nœmero total de entradas, de la
-    /              posici—n de un registro y del contenido de su liga
+    / consulta del nÃºmero total de entradas, de la
+    /              posiciÃ³nn de un registro y del contenido de su liga
     /-----------------------------------------------------------------*/
     
     public int size() throws IOException {
@@ -50,7 +44,7 @@ public class IndiceDenso {
 	}
     
     /*-----------------------------------------------------------------
-    / mŽtodos de inserci—n y actualizaci—n
+    / mï¿½todos de inserciï¿½n y actualizaciï¿½n
     /-----------------------------------------------------------------*/
     
 	public int getPosicion( String clave ) throws IOException {
@@ -73,7 +67,7 @@ public class IndiceDenso {
 	}
     
     /*-----------------------------------------------------------------
-    / busca un registro en el ’ndice y regresa su posici—n
+    / busca un registro en el ï¿½ndice y regresa su posiciï¿½n
     /-----------------------------------------------------------------*/
     
 	private int busquedaBinaria( String clave, int izq, int der )
@@ -137,7 +131,7 @@ public class IndiceDenso {
 	}
 
     /*-----------------------------------------------------------------
-    / desplaza registros para insertar un registro en el ’ndice
+    / desplaza registros para insertar un registro en el ï¿½ndice
     /-----------------------------------------------------------------*/
     
 	private int insertarEn( int posicion, String clave ) throws IOException {
@@ -160,7 +154,7 @@ public class IndiceDenso {
 	}
     
     /*-----------------------------------------------------------------
-    / borra una entrada del ’ndice compactando el archivo
+    / borra una entrada del ï¿½ndice compactando el archivo
     /-----------------------------------------------------------------*/
     
     public void borrarEntrada( int posicion ) throws Exception {
@@ -179,17 +173,17 @@ public class IndiceDenso {
             
         } else {
             
-            throw new Exception( "Posici—n inv‡lida" );
+            throw new Exception( "Posiciï¿½n invï¿½lida" );
         }
     }
     
     /*-----------------------------------------------------------------
-    / presenta los registros del ’ndice
+    / presenta los registros del ï¿½ndice
     /-----------------------------------------------------------------*/
     
 	public void mostrar() throws Exception {
         
-		System.out.println( "Nœmero de entradas: " + size() );
+		System.out.println( "Nï¿½mero de entradas: " + size() );
 		raf.seek( 0 );
         
 		for( int i = 0; i < size(); i++ ) {
@@ -202,7 +196,7 @@ public class IndiceDenso {
 	}
     
     /*-----------------------------------------------------------------
-    / cierra el archivo ’ndice
+    / cierra el archivo ï¿½ndice
     /-----------------------------------------------------------------*/
     
     public void cerrar() throws IOException { raf.close(); }
