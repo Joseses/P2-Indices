@@ -1,7 +1,7 @@
 /******************************************************************
 /  clase: Registro
 /
-/  autor: Dr. José Luis Zechinelli Martini
+/  autor: Dr. JosÔøΩ Luis Zechinelli Martini
 /******************************************************************/
 
 import java.io.*;
@@ -34,7 +34,7 @@ public class Registro {
 	}
     
     /*-----------------------------------------------------------------
-    / métodos getters / setters
+    / m√©todos getters / setters
     /-----------------------------------------------------------------*/
     
     public boolean deleteFlag() {
@@ -60,7 +60,7 @@ public class Registro {
         sucursal = new byte[ sucursal.length ];
         
         if( suc.length() > sucursal.length )
-			System.out.println( "ATENCION: Sucursal con más de 20 caracteres" );
+			System.out.println( "ATENCION: Sucursal con m√°s de 20 caracteres" );
         
 		for( int i = 0; i < sucursal.length && i < suc.getBytes().length; i++ )
 			 sucursal[i] = suc.getBytes()[i];
@@ -75,7 +75,7 @@ public class Registro {
         nombre = new byte[ nombre.length ];
         
         if( nom.length() > nombre.length )
-			System.out.println( "ATENCION: Nombre con más de 20 caracteres" );
+			System.out.println( "ATENCION: Nombre con m√°s de 20 caracteres" );
         
         for( int i = 0; i < nombre.length && i < nom.getBytes().length; i++ )
 			 nombre[i] = nom.getBytes()[i];
@@ -105,7 +105,7 @@ public class Registro {
 	}
     
     /*-----------------------------------------------------------------
-    / métodos para escribir y leer un registro
+    / mÔøΩtodos para escribir y leer un registro
     /-----------------------------------------------------------------*/
     
     public void read( RandomAccessFile raf ) throws IOException {
