@@ -33,6 +33,7 @@ public class Archivo {
 		int posicionIndice = indiceDenso.getPosicion( registro.getSucursal() );
         
 		if( posicionIndice == indiceDenso.size()-1 ) {
+            System.out.println("¿Primer índice?");
             
 			int posicionArchivo = (int) raf.length() / registro.length();
 			insertarEn( posicionArchivo, registro );
@@ -135,7 +136,7 @@ public class Archivo {
         
 		indiceDenso.mostrar();
         
-		System.out.println( "N�mero de registros: " + size );
+		System.out.println( "Número de registros: " + size );
 		raf.seek( 0 );
         
 		for( int i = 0; i < size; i ++ ) {

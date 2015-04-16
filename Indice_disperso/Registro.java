@@ -8,7 +8,7 @@ import java.io.*;
 import java.lang.*;
 
 public class Registro {
-    
+
     public final byte NOT_DELETED = 0;
     public final byte DELETED = 1;
     
