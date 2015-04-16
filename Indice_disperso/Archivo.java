@@ -55,6 +55,43 @@ public class Archivo {
 
     }
 
+    public boolean busquedaLineal(int clave) throws IOException{
+        int tam = indiceDisperso.size();
+        int x = 0;
+        boolean encontrado = false;
+        Registro reg = new Registro();
+        int indPos = indiceDisperso.busquedaLineal(clave);
+        if(indPos==-1) {
+            System.out.println("Indice vacío");
+            return encontrado;
+        } else if (indPos==tam-1) {//Ultimo registro
+            int i = indPos*(10*reg.length());
+            raf.seek(i);
+            reg.read(raf);
+            while(raf.getFilePointer()!=raf.length()) {
+                if(reg.getNumero()==clave) {
+                    return encontrado = true;
+                } else {
+                    reg.read(raf);
+                }
+            }
+        } else {
+            int i = indPos*(10*reg.length());
+            raf.seek(i);
+            reg.read(raf);
+            while(raf.getFilePointer()!=raf.length()) {
+                if (reg.getNumero() == clave) {
+                    encontrado = true;
+                    raf.seek(raf.length());
+                } else {
+                    reg.read(raf);
+                }
+            }
+
+        }
+        return encontrado;
+    }
+
     public void busInsBloque(int posicionIndice, Registro registro) throws IOException {
         Registro temp = new Registro();
         int i = posicionIndice*(10*registro.length());

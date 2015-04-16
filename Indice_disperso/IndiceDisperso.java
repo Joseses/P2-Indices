@@ -185,5 +185,22 @@ public class IndiceDisperso {
         }
     }
 
+    public int busquedaLineal (int clave) throws IOException{
+        if(size()==0) {
+            return -1;
+        } else {
+            raf.seek(0);
+
+            for( int i = 0; i < size(); i++ ) {
+
+                registro.read( raf );
+                if(registro.getClave()>clave || registro.getClave()==clave) {
+                    return i;
+                }
+            }
+        }
+        return size()-1; //La clave es mayor que el ultimo indice
+    }
+
     public void cerrar() throws IOException { raf.close(); }
 }
