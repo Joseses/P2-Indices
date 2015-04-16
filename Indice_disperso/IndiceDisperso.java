@@ -63,6 +63,16 @@ public class IndiceDisperso {
             return busquedaBinaria(clave, 0, size() - 1);
     }
 
+    public int getLastIndex() throws IOException {
+        if(size()!=0) {
+            int pos = (size()-registro.length())/registro.length();
+            return pos;
+        } else {
+            return 0;
+        }
+
+    }
+
     private int busquedaBinaria( int clave, int izq, int der ) throws IOException {
         while( izq <= der ) {
 

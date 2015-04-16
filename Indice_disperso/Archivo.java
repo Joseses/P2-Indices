@@ -33,20 +33,21 @@ public class Archivo {
         System.out.println("[ARCHIVO-insertar] la posicion del indice es " + posicionIndice);
 
         int posicionArchivo = (int) raf.length() / registro.length();
-        System.out.println("Primer Else de insertar...");
         if (raf.length() == 0) {
             insertarEn(posicionArchivo, registro);
+            actualizarIndice(posicionIndice);
         } else {
             busInsBloque(posicionIndice, registro);
         } //end else
 
-
-        if (((posicionIndice + 1) * (registro.length() * 11)) == raf.length()) { //Bloque desbordado
+        System.out.println("Se desborda? " + (((indiceDisperso.getLastIndex())*(registro.length()*10))+registro.length()) +
+                " " + raf.length());
+        if ((((posicionIndice+1)*(registro.length()*10))+registro.length()) == raf.length()) { //Bloque desbordado
             Registro temp = new Registro();
             raf.seek(raf.length() - temp.length());
             temp.read(raf);
-            indiceDisperso.insertarEn(posicionIndice, temp.getNumero(),
-                            (int)(raf.length()-temp.length())/temp.length());
+            indiceDisperso.insertarEn(posicionIndice+1, temp.getNumero(),
+                            (int)(raf.length())/temp.length());
         }
 
         if (indiceDisperso.getLiga(posicionIndice) == SIN_ASIGNAR)
@@ -106,6 +107,7 @@ public class Archivo {
                 System.out.println("Efectivamente");
                 int posInsert = (int) ((raf.getFilePointer())-temp.length())/temp.length();
                 insertarEn(posInsert, registro);
+                actualizarIndice(posicionIndice+1);
                 stahp = true;
                 System.out.println("Valor de posInsert " + posInsert);
                 if (posInsert == i/temp.length()) {
@@ -128,6 +130,7 @@ public class Archivo {
                 //raf.seek(raf.getFilePointer() + (temp.length()));
                 if(raf.getFilePointer()==raf.length()) {
                     insertarEn((int)(raf.getFilePointer()/temp.length()), registro);
+                    actualizarIndice(posicionIndice);
                     stahp = true;
                 } else {
                     temp.read(raf);
@@ -142,7 +145,7 @@ public class Archivo {
     public void actualizarIndice(int posicionIndice) throws IOException {
         System.out.println("[ARCHIVO-actInd] Posicion del indice inial" + posicionIndice);
         for( int x = posicionIndice;
-             x < indiceDisperso.size(); x++ )
+             x < indiceDisperso.size()-1; x++ )
         {
             System.out.println("[ARCHIVO-actInd] Incrementos de indice " + posicionIndice);
             Registro temp1 = new Registro();
