@@ -8,8 +8,9 @@ public class IndiceDisperso {
 
     public final static int SIN_ASIGNAR = -1;    // registro no encontrado
 
-    private RegIndice registro = null;
+    public RegIndice registro = null;
     private RandomAccessFile raf = null;
+    private static int claveMenor = -200;
 
     public IndiceDisperso( RandomAccessFile indice, int longitud ) {
 
@@ -65,7 +66,7 @@ public class IndiceDisperso {
 
     public int getLastIndex() throws IOException {
         if(size()!=0) {
-            int pos = (size()-registro.length())/registro.length();
+            int pos = (size()/registro.length());
             return pos;
         } else {
             return 0;
@@ -140,6 +141,7 @@ public class IndiceDisperso {
         registro.setClave( clave );
         registro.setLiga( liga );
         registro.write( raf );
+        System.out.println("[INDICE-insertarEn] Tamaño de registro" + size());
 
         return posicion;
     }
@@ -147,6 +149,7 @@ public class IndiceDisperso {
     public int getIndexPos(int clave) throws IOException{
         if(size()==0) { //Se crea la primera entrada del indice
             System.out.println("[INDICE - getIndexPos] Se insertará la primera posición del index");
+            claveMenor=clave;
             return insertarEn(0, clave, 0);
         } else {
             int izq = 0;
