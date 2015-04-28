@@ -184,6 +184,42 @@ public class IndiceDisperso {
         return 0;
     }//end getIndexPos
 
+    public int findIndexPos(int clave) throws IOException{
+        if(size()==0) { //Se crea la primera entrada del indice
+            return 0;
+        } else {
+            int izq = 0;
+            int der = size()-1;
+            while( izq <= der ) {
+
+                int mitad = izq + (der - izq) / 2;
+
+                raf.seek(mitad * registro.length());
+                registro.read(raf);
+
+                if (registro.getClave() > clave) {
+
+                    if (izq == der || (mitad - 1) < 0)
+                        return mitad;
+                    else
+                        der = mitad;
+
+                } else if (registro.getClave() < clave) {
+
+                    if (izq == der)
+                        return mitad;
+                    else
+                        izq = mitad + 1;
+
+                } else {
+
+                    return mitad;
+                }
+            }
+        } //end else
+        return 0;
+    }//end findIndexPos
+
     public void mostrar() throws Exception {
 
         System.out.println( "Número de entradas: " + size() );

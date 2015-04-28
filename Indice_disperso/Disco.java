@@ -60,18 +60,15 @@ public class Disco {
 				archivo.insertar(registro);
 				System.out.println("-------------------------Registro Agregado-------------------------");
 			}else if(option == 2) {
-				/*System.out.println("--------------------------------------------------------------");
+				System.out.println("--------------------------------------------------------------");
 				//archivo.mostrar();
 				System.out.println("Introduzca el nombre de la Sucursal del registro a eliminar");
 				System.out.print("(Se eliminara el primer registro encontrado de la sucursal): ");
-				String suc = sc.nextLine();
+				int suc = sc.nextInt();
 				System.out.println("--------------------------------------------------------------");
-				if (archivo.borrar(suc)) {
-					System.out.println("El registro se eliminó correctamente");
-				}else {
-					System.out.println("No existe el registro");
-				}
-				System.out.println("--------------------------------------------------------------");*/
+				archivo.borrar(suc);
+
+				System.out.println("--------------------------------------------------------------");
 			}else if(option == 3){
 				for( int num = 1, i = 1; i <= 10; i++ ) { //Numero de Surcursales
 					for( int j = 1; j <= 10; j++ ) { //Numero de clientes

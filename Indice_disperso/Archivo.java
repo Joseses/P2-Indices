@@ -98,7 +98,7 @@ public class Archivo {
         return encontrado;
     }
 
-    public void busInsBloque(int posicionIndice, Registro registro) throws IOException {
+    /*public void busInsBloque(int posicionIndice, Registro registro) throws IOException {
         Registro temp = new Registro();
         int i = posicionIndice*(10*registro.length());
         System.out.println("Posicion de i " + i );
@@ -141,7 +141,160 @@ public class Archivo {
                 }
             }
         }
+    }*/
 
+    /*public void busInsBloque(int posicionIndice, Registro registro) throws IOException {
+        Registro temp = new Registro();
+        int i = posicionIndice*(10*registro.length());
+        System.out.println("Posicion de i " + i );
+        raf.seek(i);
+        temp.read(raf);
+        boolean stahp = false;
+        int posicionArchivo = (int) raf.length() / registro.length();
+        while(!stahp) {
+            System.out.println(temp.getNumero() + " es igual a " + registro.getNumero() + "?");
+            if(temp.getNumero()==registro.getNumero()) {
+                System.out.println("Resulta que es igual...");
+                stahp = true;
+                raf.seek(raf.getFilePointer() - temp.length());
+                registro.write( raf );
+                int x = (int)raf.getFilePointer()-registro.length()/temp.length();
+                if(x==i/temp.length()) {
+                    indiceDisperso.setLiga(i, x, registro.getNumero());
+                    actualizarIndice(posicionIndice);
+                }
+            } else if(temp.getNumero()>registro.getNumero()) {
+                int posInsert = (int) ((raf.getFilePointer())-temp.length())/temp.length();
+                insertarEn(posInsert, registro);
+//                actualizarIndice(posicionIndice);
+                stahp = true;
+                System.out.println("1. Tamaño de registro " + indiceDisperso.size());
+//                if (posInsert == i/temp.length()) {
+//                    System.out.println( posInsert + " (postInsert) es igual a (i) " + i);
+//                    indiceDisperso.setLiga(i, posInsert, registro.getNumero());
+//  //                  actualizarIndice(posicionIndice);
+//                }
+                actualizarIndice(posicionIndice);
+                System.out.println("3. Tamaño de registro " + indiceDisperso.size());
+            } else {
+                //raf.seek(raf.getFilePointer() + (temp.length()));
+                if(raf.getFilePointer()==raf.length()) {
+                    insertarEn((int)(raf.getFilePointer()/temp.length()), registro);
+                    actualizarIndice(posicionIndice);
+                    stahp = true;
+                } else {
+                    temp.read(raf);
+                }
+            }
+        }
+    }*/
+
+    public void busInsBloque(int posicionIndice, Registro registro) throws IOException {
+        Registro temp = new Registro();
+        int i = posicionIndice*(10*registro.length());
+        System.out.println("Posicion de i " + i );
+        raf.seek(i);
+        temp.read(raf);
+        boolean stahp = false;
+        int posicionArchivo = (int) raf.length() / registro.length();
+        boolean numeroRepetido = false;
+        if(posicionIndice!=0) {
+            raf.seek((posicionIndice-1)*(10*registro.length()));
+            temp.read(raf);
+        }
+        for(int x = 0; x<10; x++) {
+            System.out.println("For: " + temp.getNumero() + " es igual a " + registro.getNumero() + "?");
+            if (temp.getNumero() == registro.getNumero()) {
+                numeroRepetido = true;
+                x = 9;
+            } else if (raf.getFilePointer() != raf.length()) {
+                temp.read(raf);
+            } else {
+                x = 9;
+                raf.seek(i);
+                temp.read(raf);
+            }
+        }
+        while(!stahp) {
+            System.out.println(temp.getNumero() + " es igual a " + registro.getNumero() + "?");
+            if (temp.getNumero() == registro.getNumero()) {
+                System.out.println("Resulta que es igual...");
+                stahp = true;
+                raf.seek(raf.getFilePointer() - temp.length());
+                registro.write(raf);
+                int x = (int) raf.getFilePointer() - registro.length() / temp.length();
+                if (x == i / temp.length()) {
+                    indiceDisperso.setLiga(i, x, registro.getNumero());
+                    actualizarIndice(posicionIndice);
+                }
+            } else if (temp.getNumero() > registro.getNumero()) {
+                int posInsert = (int) ((raf.getFilePointer()) - temp.length()) / temp.length();
+                insertarEn(posInsert, registro);
+//                actualizarIndice(posicionIndice);
+                stahp = true;
+                System.out.println("1. Tamaño de registro " + indiceDisperso.size());
+//                if (posInsert == i/temp.length()) {
+//                    System.out.println( posInsert + " (postInsert) es igual a (i) " + i);
+//                    indiceDisperso.setLiga(i, posInsert, registro.getNumero());
+//  //                  actualizarIndice(posicionIndice);
+//                }
+                actualizarIndice(posicionIndice);
+                System.out.println("3. Tamaño de registro " + indiceDisperso.size());
+            } else {
+                //raf.seek(raf.getFilePointer() + (temp.length()));
+                if (raf.getFilePointer() == raf.length()) {
+                    insertarEn((int) (raf.getFilePointer() / temp.length()), registro);
+                    actualizarIndice(posicionIndice);
+                    stahp = true;
+                } else {
+                    temp.read(raf);
+                }
+            }
+        }
+    }
+
+    public void busInsEliminar(int posicionIndice, int cuenta) throws IOException {
+        Registro temp = new Registro();
+        int i = posicionIndice*(10*temp.length());
+        System.out.println("Posicion de i " + i );
+        raf.seek(i);
+        temp.read(raf);
+        int posicionArchivo = (int) raf.length() / temp.length();
+        if(posicionIndice!=0) {
+            raf.seek((posicionIndice-1)*(10*temp.length()));
+            temp.read(raf);
+        }
+        for(int x = 0; x<10; x++) {
+            System.out.println("For: " + temp.getNumero() + " es igual a " + cuenta + "?");
+            if (temp.getNumero() == cuenta) {
+                x = 9;
+            } else if (raf.getFilePointer() != raf.length()) {
+                temp.read(raf);
+            } else {
+                x = 9;
+                raf.seek(i);
+                temp.read(raf);
+            }
+        }
+        for(int z = 0; z<10;z++) {
+            System.out.println(temp.getNumero() + " es igual a " + cuenta + "?");
+            if (temp.getNumero() == cuenta) {
+                System.out.println("Resulta que es igual...");
+                raf.seek(raf.getFilePointer() - temp.length());
+                temp.setFlag(true);
+                temp.write(raf);
+                z = 9;
+
+            } else {
+                //raf.seek(raf.getFilePointer() + (temp.length()));
+                if (raf.getFilePointer() == raf.length()) {
+                    System.out.println("Número a eliminar no existe");
+                    z=9;
+                } else {
+                    temp.read(raf);
+                }
+            }
+        }
     }
 
     public void actualizarIndice(int posicionIndice) throws IOException {
@@ -200,15 +353,17 @@ public class Archivo {
         System.out.println("Llegamos al return 0");
         return 0;
     }//end busquedaBin
-
-    public void insertar2( Registro registro ) throws IOException {
-        int posicion = indiceDisperso.getIndexPos(registro.getNumero());
-
-    }
     
     /*-----------------------------------------------------------------
     / borra un registro del archivo
     /-----------------------------------------------------------------*/
+
+    public void borrar(int numCuenta) throws IOException {
+        int posicionIndice = indiceDisperso.findIndexPos(numCuenta);
+        Registro registro = new Registro();
+        busInsEliminar(posicionIndice, numCuenta);
+
+    }
     
     /*public boolean borrar( int numCuenta ) throws Exception {
 
@@ -284,17 +439,24 @@ public class Archivo {
         
 		indiceDisperso.mostrar();
         
-		System.out.println( "Número de registros: " + size );
-		raf.seek( 0 );
+		System.out.println("Número de registros: " + size);
+		raf.seek(0);
         
 		for( int i = 0; i < size; i ++ ) {
             
 			registro.read( raf );
             
-			System.out.println( "( " + registro.getSucursal().trim() + ", "
+			System.out.print( "( " + registro.getSucursal().trim() + ", "
                                      + registro.getNumero() + ", "
                                      + registro.getNombre().trim() + ", "
-                                     + registro.getSaldo() + " )" );
+                                     + registro.getSaldo());
+            if(registro.getBorrado()) {
+                System.out.print(", " + "BORRADO" + ")");
+                System.out.println();
+            } else {
+                System.out.print(")");
+                System.out.println();
+            }
 		}
 	}
     

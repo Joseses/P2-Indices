@@ -82,6 +82,14 @@ public class Registro {
     }
     
     public double getSaldo() { return saldo; }
+
+    public boolean getBorrado() {
+        if(borrado==NOT_DELETED){
+            return false;
+        } else {
+            return true;
+        }
+    }
     
     /*-----------------------------------------------------------------
     / longitud en bytes de un registro
