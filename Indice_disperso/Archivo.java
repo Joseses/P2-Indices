@@ -298,6 +298,57 @@ public class Archivo {
     / cierra el archivo de datos
     /-----------------------------------------------------------------*/
     
+    /*------------------------------------------------------------------
+    /Busqueda Lineal
+    */
+    public void busquedaLineal(int clave, Registro registro) throws IOException {
+        
+		int n = (int) raf.length() / registro.length();
+                boolean encontrado = false;
+                int j=0;
+                
+                int posicion = indiceDisperso.busquedaLineal(clave);
+                
+               
+
+		if(posicion != -1  )
+                {
+                    
+                    raf.seek(posicion*registro.length());
+                    registro.read(raf);
+                    
+                    System.out.println("Numero de cuenta existe en el indice"/*+" "+posicion+" "+registro.compareTo(clave)*/);
+                    int i = posicion;
+                    while(i < n && j < 10 && !registro.deleteFlag() )
+                    //for(int i = posicion; i < n && registro.compareTo(clave)== 0;  i++) 
+                    {
+			
+                       // System.out.println(posicion+" "+i+" "+n+" "+registro.compareTo(clave)+" "+registro.getNumero()+" "+registro.getSucursal());
+                        
+			if(registro.getNumero() == clave )
+                        {
+                            System.out.println("El registro se encuentra en la posicón "+ i +" del archivo "+"\n"
+                            + registro.getSucursal() + " "+ registro.getNombre() + " "+ registro.getSaldo());
+                            encontrado = true;
+			}
+                        
+                        i++;
+                        if(i < n){
+                            raf.seek(i* registro.length());
+                            registro.read(raf);}
+                        j++;
+                    }
+                }
+                else
+                {
+                     System.out.println("La sucursal no existe en el indice");       
+                }
+                if(!encontrado)
+                    System.out.println("No existe el registro con tal numero de cuenta");
+		
+    }
+    
+    
     public void cerrar() throws IOException {
         
         raf.close();
