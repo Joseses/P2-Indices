@@ -38,9 +38,7 @@ public class RegIndice {
     public void write( RandomAccessFile raf ) throws IOException {
 
         raf.writeInt( clave );
-        System.out.println("Clave a escribir: " + clave);
         raf.writeInt(liga);
-        System.out.println("Liga a escribir: " + liga);
     }
 
 }

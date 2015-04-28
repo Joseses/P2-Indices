@@ -48,14 +48,6 @@ public class IndiceDisperso {
         registro.write(raf);
     }
 
-    /*public int getPosicion( int clave ) throws IOException {
-
-        if( size() == 0 )
-            return insertarEn( 0, clave );
-        else
-            return buscarInsertar( clave, 0, size()-1 );
-    }*/
-
     public int find( int clave ) throws IOException {
 
         if( size() == 0 )
@@ -93,41 +85,9 @@ public class IndiceDisperso {
         return SIN_ASIGNAR;
     }
 
-    /*private int buscarInsertar( int clave, int izq, int der ) throws IOException{
-        while( izq <= der ) {
-
-            int mitad = izq + ( der - izq ) / 2;
-
-            raf.seek(mitad * registro.length());
-            registro.read( raf );
-
-            if( registro.getClave() > clave ) {
-
-                if( izq == der || ( mitad - 1 ) < 0 )
-                    return insertarEn( mitad, clave );
-                else
-                    der = mitad;
-
-            } else if( registro.getClave() < clave ) {
-
-                if( izq == der )
-                    return insertarEn( mitad + 1, clave );
-                else
-                    izq = mitad + 1;
-
-            } else {
-
-                return mitad;
-            }
-        }
-
-        throw new IOException( "Archivo inconsistente" );
-    }*/
-
     public int insertarEn( int posicion, int clave, int liga ) throws IOException {
 
         for( int i = size()-1; i >= posicion; i-- ) {
-            System.out.println("[INDICE-insertarEn] Entrando a for");
 
             raf.seek( i * registro.length() );
             registro.read( raf );
@@ -137,18 +97,15 @@ public class IndiceDisperso {
         }
 
         raf.seek( posicion * registro.length() );
-        System.out.println("[INDICE-insertarEn] Clave a escribir " + clave);
         registro.setClave( clave );
         registro.setLiga( liga );
         registro.write( raf );
-        System.out.println("[INDICE-insertarEn] Tamaño de registro" + size());
 
         return posicion;
     }
 
     public int getIndexPos(int clave) throws IOException{
         if(size()==0) { //Se crea la primera entrada del indice
-            System.out.println("[INDICE - getIndexPos] Se insertará la primera posición del index");
             claveMenor=clave;
             return insertarEn(0, clave, 0);
         } else {
