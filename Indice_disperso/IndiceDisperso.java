@@ -191,22 +191,32 @@ public class IndiceDisperso {
         }
     }
 
-    public int busquedaLineal (int clave) throws IOException{
-        if(size()==0) {
-            return -1;
-        } else {
-            raf.seek(0);
-
-            for( int i = 0; i < size(); i++ ) {
-
-                registro.read( raf );
-                if(registro.getClave()>clave || registro.getClave()==clave) {
-                    return i;
-                }
-            }
-        }
-        return size()-1; //La clave es mayor que el ultimo indice
-    }
+    
+    
+    /*-----------------------------------------------------------------
+    / busqued lineal de un registro y regre su  posicion
+    /-----------------------------------------------------------------*/
+   
+        public int busquedaLineal(int unaClave)
+            throws IOException
+	{
+            RegIndice temp = new RegIndice();
+            
+            for(int i = 0; i<size(); i++) {
+			raf.seek(i* registro.length());
+                        //System.out.println(i +" "+ registro.length() +" "+ size()+registro.getClave());
+			registro.read(raf);
+                        
+                        raf.seek((i+1)* registro.length());
+                        temp.read(raf);
+                        
+			if( registro.getClave() < unaClave && temp.getClave() > unaClave) 
+                        {
+				return registro.getLiga();
+			}
+		}
+            return SIN_ASIGNAR;
+	}     
 
     public void cerrar() throws IOException { raf.close(); }
 }
