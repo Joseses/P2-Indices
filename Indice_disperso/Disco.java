@@ -33,8 +33,8 @@ public class Disco {
 	public static void setMenu(int option){
 		try {
 			// metadatos del archivo de datos y del archivo �ndice
-			File datos = new File( "Archivo.Datos" );
-			File denso = new File( "Indice.Denso" );
+			File datos = new File( "Archivo2.Datos" );
+			File denso = new File( "Indice2.Dispero" );
 
 			// handlers para manipular el contenido de los archivos
 			RandomAccessFile archivoRaF = new RandomAccessFile( datos, "rw" );
@@ -70,17 +70,12 @@ public class Disco {
 
 				System.out.println("--------------------------------------------------------------");
 			}else if(option == 3){
-				for( int num = 1, i = 1; i <= 10; i++ ) { //Numero de Surcursales
-					for( int j = 1; j <= 10; j++ ) { //Numero de clientes
-						for( int k = 1; k <= 1; k++, num++ ) {
-							String suc = "Sucursal " + String.format( "%3d", i );
-							String nom = "Cliente " + j;
-							double salMin = 100.0, salMax = 30000.6;
-							double sal = Math.random() * (salMax - salMin) + salMin;
-							archivo.insertar( new Registro( suc, num, nom, sal ) );
-						}
-					}
-				}
+				System.out.println("--------------------------------------------------------------");
+                                System.out.print("Introduzca el numero de cuenta: ");
+				int num = sc.nextInt();
+                                System.out.println("--------------------------------------------------------------");
+				archivo.busquedaLineal(num,new Registro());
+                                System.out.println("--------------------------------------------------------------");
 			}else if(option == 4){
 				System.out.println("--------------------------------------------------------------");
 				archivo.mostrar();
